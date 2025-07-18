@@ -1,5 +1,30 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
+/**
+ * 1. PENGGUNAAN DAN PENGENALAN useGSAP
+ *      Untuk menggunakan gsap di react Kita membungkusnya dengan useGsap(()=>{},[]). useGsap ini sama konsepnya dengan
+ *    useEffect dan useFrame yang membedakan dia hanya untuk gsap. Kemudian logic gsap nya diletakkan didalam callback useGsap.
+ *
+ *    A. Struk useGsap dan struktur gsap.
+ *      a. useGsap
+ *          useGsap(() => { **gsap** }, [pemicuEffect/bisaKosong]);
+ *      b. gsap.methodGsap("./#targetElement", {properti: bisa banyak})
+ *          gsap.to("#boxOne", {x: 400, duration: 1});
+ */
+
 const GsapTo = () => {
   // TODO: Implement the gsap.to() method
+  useGSAP(() => {
+    gsap.to("#blue-box", {
+      x: 250,
+      repeat: -1, // --> Value-value Parameters = 1(2kali) || 0(1kali)*default || -1(infinite)
+      yoyo: true, // --> Membuat sebuah animasi berlawanan dari yang dideklarasikan.
+      rotation: 360,
+      duration: 2,
+      ease: "elastic", // --> Efek animasi yang digunakan saat animasi berjalan
+    });
+  }, []);
 
   return (
     <main>
