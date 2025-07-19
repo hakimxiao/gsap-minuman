@@ -1,5 +1,32 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 const GsapFromTo = () => {
   // TODO: Implement the gsap.fromTo() method
+  useGSAP(() => {
+    gsap.fromTo(
+      // #  fromTo Adalah dari state baru ke satate baru itulah gsap.fromTo. Maknanya adalah
+      //    kita bisa membuat 2 {} object animasi karena 2 hal ini adalah object baru.
+      "#red-box",
+      {
+        // efek baru 1
+        x: 0,
+        rotation: 0,
+        borderRadius: "0%",
+      },
+      {
+        // efek baru 2
+        x: 250,
+        repeat: -1,
+        yoyo: true,
+        borderRadius: "100%",
+        rotation: 360,
+        duration: 2,
+        ease: "bounce.out",
+      }
+      // efek baru 1 ke efek baru 2
+    );
+  }, []);
 
   return (
     <main>
