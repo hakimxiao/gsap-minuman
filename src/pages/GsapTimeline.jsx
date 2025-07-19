@@ -1,5 +1,40 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
+// timline : Adalah dia bertindak sebagai container yang dimana akan menghendle urutan animasi serta mempermudah kita dalam manipulasi
+//           sepeprti pause dan lainnya. timeline juga mempermnudah kita dalam memanipulasi animasi baik untuk perulangan dan jeda animasi
+
 const GsapTimeline = () => {
   // TODO: Implement the gsap timeline
+  var tl = gsap.timeline({ repeat: -1, repeatDelay: 1, yoyo: true });
+
+  useGSAP(() => {
+    tl.to("#yellow-box", {
+      x: 200,
+      rotation: 360,
+      borderRadius: "100%",
+      duration: 2,
+      ease: "back.inOut",
+    });
+
+    tl.to("#yellow-box", {
+      y: 200,
+      scale: 2,
+      rotation: 360,
+      borderRadius: "100%",
+      duration: 2,
+      ease: "back.inOut",
+    });
+
+    tl.to("#yellow-box", {
+      x: 500,
+      scale: 1,
+      rotation: 360,
+      borderRadius: "8px",
+      duration: 2,
+      ease: "back.inOut",
+    });
+  }, []);
 
   return (
     <main>
@@ -35,7 +70,17 @@ const GsapTimeline = () => {
       </p>
 
       <div className="mt-20 space-y-10">
-        <button onClick={() => {}}>Play/Pause</button>
+        <button
+          onClick={() => {
+            if (tl.paused()) {
+              tl.play();
+            } else {
+              tl.pause();
+            }
+          }}
+        >
+          Play/Pause
+        </button>
 
         <div id="yellow-box" className="w-20 h-20 bg-yellow-500 rounded-lg" />
       </div>
