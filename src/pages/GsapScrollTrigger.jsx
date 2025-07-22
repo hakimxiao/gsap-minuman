@@ -1,5 +1,45 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all"; // 1. import dulu
+import { useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger); // 2. inisialisasi dan daftarkan dengan method registerPlugin
+
+/**
+ * GSAP scroll trigger
+ *  Adalah sebuah plugin dan dia juga properti yang bisa kompleks maupun simple. Karena scroll triger merupakan plugin maka wajib bagi kita
+ *  untuk mengimport nya dan melakukkan inisial.
+ *
+ */
+
 const GsapScrollTrigger = () => {
+  const scrollRef = useRef(); // 3. Kita membutuhkan Ref untuk mengatuhi posisi scroll
+
   // TODO: Implement the gsap scroll trigger
+  useGSAP(
+    () => {
+      const boxes = gsap.utils.toArray(scrollRef.current.children); // 4. Disini kita menggunakan ref untuk mengambil semua anakanya (DOM)
+
+      boxes.forEach((box) => {
+        gsap.to(box, {
+          x: 150 * (boxes.indexOf(box) + 5),
+          rotation: 360,
+          borderRadius: "100%",
+          scale: 1.5,
+          scrollTrigger: {
+            trigger: box, // triger dilakukkan jika box muncul dilayar saat scroll
+            start: "bottom bottom", // Ketika bawahan dari box bertemu dengan bawahan dari viewport maka diaakan beranimasi
+            end: "top 20%", // ketika top nya mencapai 20% dari viewport maka dia akan berhenti
+            scrub: true, // ini akan membuat animasi kita mencadi smoot,
+          },
+          ease: "power1.inOut",
+        });
+      });
+    },
+    // scope digunakan agar animasi hanya berlaku pada elemen di dalam komponen ini,
+    // mencegah konflik dengan elemen lain yang punya class sama di luar komponen.
+    { scope: scrollRef }
+  );
 
   return (
     <main>
@@ -51,7 +91,8 @@ const GsapScrollTrigger = () => {
         </svg>
       </div>
 
-      <div className="mt-20 w-full h-screen">
+      <div className="mt-20 w-full h-screen" ref={scrollRef}>
+        {/* ref kitagunakan disini untuk menandakan posisi scroll */}
         <div
           id="scroll-pink"
           className="scroll-box w-20 h-20 rounded-lg bg-pink-500"
